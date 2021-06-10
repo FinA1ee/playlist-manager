@@ -29,22 +29,5 @@ const loadClient = () => {
     );
 };
 
-const execute = () => {
-  return gapi.client.youtube.playlists
-    .list({
-      part: ["snippet,contentDetails"],
-      maxResults: 25,
-      mine: true,
-    })
-    .then(
-      function (response) {
-        // Handle the results here (response.result has the parsed body).
-        console.log("Response", response);
-      },
-      function (err) {
-        console.error("Execute error", err);
-      }
-    );
-};
 
-export { authenticate, loadClient, execute };
+export { authenticate, loadClient };

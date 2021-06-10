@@ -3,12 +3,15 @@ import React, { Component } from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
 import ActionPanel from "./components/ActionPanel";
-import { authenticate, loadClient, execute } from "./service/gapiService";
+import { authenticate, loadClient } from "./service/gapiService";
 import { apiKEY, config } from "./service/gapiInfo";
+import { fetchPlaylists } from "./service/youtubeApiService";
+import PlaylistDisplay from "./components/PlaylistDisplay";
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [gapiLoaded, setGapiLoaded] = useState(false);
+  const [playlists, setPlaylists] = useState([]);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -34,24 +37,32 @@ const App = () => {
     document.body.appendChild(script);
   }, [gapiLoaded]);
 
-  // handleSigninStatusChange = isSignedIn => {
-  //   const auth2 = gapi.auth2.getAuthInstance();
-  //   if (isSignedIn) {
-  //     const currentUser = auth2.currentUser.get();
-  //     const authResponse = currentUser.getAuthResponse(true);
-  //     if (authResponse) {
-  //       // save access token
-  //     }
-  //   }
-  // }
-
-  const handleAuthenticate= () => {
+  const handleAuthenticate = () => {
     authenticate().then(loadClient).then(setIsLogin(true));
   };
 
+  const handleExecute = () => {
+    const result = fetchPlaylists().then(
+      function (response) {
+        console.log(response.result.items);
+        setPlaylists(response.result.items);
+      },
+      function (err) {
+        console.error("Execute error", err);
+      }
+    );;
+  }
+
 
   return gapiLoaded ? (
-    <ActionPanel isLogin={isLogin} handleAuthenticate={handleAuthenticate} handleExecute={execute}/>
+    <div>
+      <ActionPanel
+        isLogin={isLogin}
+        handleAuthenticate={handleAuthenticate}
+        handleExecute={handleExecute}
+      />
+      <PlaylistDisplay playlists={playlists}/>
+    </div>
   ) : (
     <div>Please provide clientId in the config</div>
   );
