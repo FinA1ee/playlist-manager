@@ -1,19 +1,26 @@
-import React from 'react';
-import PlaylistItem from './PlaylistItem';
+import React from "react";
+import Playlist from "./Playlist";
+import { fetchPlaylistItems } from "../service/youtubeApiService";
+
+
 
 const PlaylistDisplay = (props) => {
-    const { playlists } = props;
-    const playlistDiv = playlists.map((list) => {
-        const { snippet, contentDetails } = list;
-        const { title } = snippet;
-        const { itemCount } = contentDetails;
-        return <PlaylistItem title={title} itemCount={itemCount}/>
-    });
+  const { playlists } = props;
+  const playlistDiv = playlists.map((list) => {
+    const { id, snippet, contentDetails } = list;
+    const { title } = snippet;
+    const { itemCount } = contentDetails;
     return (
-        <div>
-            {playlistDiv}
-        </div>
-    )
-}
+      itemCount > 105 ? (
+      <Playlist
+        title={title}
+        itemCount={itemCount}
+        playlistID={id}
+        fetchPlaylistItems={fetchPlaylistItems}
+      /> ) : null
+    );
+  });
+  return <div>{playlistDiv}</div>;
+};
 
 export default PlaylistDisplay;
