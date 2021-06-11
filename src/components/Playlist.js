@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { CSVLink, CSVDownload } from "react-csv";
 
 const Playlist = (props) => {
   const { playlistID, title, itemCount, fetchPlaylistItems } = props;
   const [playlistItemData, setPlaylistItemData] = useState([]);
   const [nextPageToken, setNextPageToken] = useState(null);
   const [expand, setExpand] = useState(false);
+  const [resJsonLst, setResJsonLst] = useState({});
 
   const handleFetchPlaylistItem = (id, pageToken) => {
     fetchPlaylistItems(id, pageToken).then(
       function (response) {
-        console.log(response.result.items);
+        console.log(response.result);
         setPlaylistItemData([...playlistItemData, ...response.result.items]);
+        // setResJsonLst({...resJsonLst, ...response.result})
         if (response.result.nextPageToken) {
         //   console.log("Retrieveing Next Page")
           setNextPageToken(response.result.nextPageToken);
@@ -26,8 +29,12 @@ const Playlist = (props) => {
       setExpand(!expand);
   }
 
-  const exportCSV = () => {
-      
+  const generateCSVData = () => {
+    const result = playlistItemData.map((item) => {
+        return {title: item.snippet.title};
+    })
+    console.log("result: ")
+    return result;
   }
 
 
@@ -56,7 +63,7 @@ const Playlist = (props) => {
       {/* <button onClick={handleFetchPlaylistItem}>Display Items.</button> */}
       <div> 
         <button onClick={expandPlaylistItem}>Expand / Collapse</button>
-        <button onClick={exportCSV}>Export CSV</button>
+        <CSVLink data={generateCSVData()}>Export CSV</CSVLink>
       </div>
       
       { expand ? <div>{playlistItem}</div> : null }

@@ -7,11 +7,16 @@ import { authenticate, loadClient } from "./service/gapiService";
 import { apiKEY, config } from "./service/gapiInfo";
 import { fetchPlaylists } from "./service/youtubeApiService";
 import PlaylistDisplay from "./components/PlaylistDisplay";
+import Loading from "./components/Loading";
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [gapiLoaded, setGapiLoaded] = useState(false);
   const [playlists, setPlaylists] = useState([]);
+
+  useEffect(() => {
+
+  }, [])
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -38,13 +43,15 @@ const App = () => {
   }, [gapiLoaded]);
 
   const handleAuthenticate = () => {
-    authenticate().then(loadClient).then(setIsLogin(true));
+    authenticate().then(function () {
+      loadClient().then(function () { setIsLogin(true) });
+    });
   };
 
   const handleExecute = () => {
     const result = fetchPlaylists().then(
       function (response) {
-        console.log(response.result.items);
+        // console.log(response.result.items);
         setPlaylists(response.result.items);
       },
       function (err) {
@@ -53,6 +60,7 @@ const App = () => {
     );
   }
 
+  
 
   return gapiLoaded ? (
     <div>
@@ -64,7 +72,7 @@ const App = () => {
       <PlaylistDisplay playlists={playlists}/>
     </div>
   ) : (
-    <div>Please provide clientId in the config</div>
+    <Loading/>
   );
 };
 

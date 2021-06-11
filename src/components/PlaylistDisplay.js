@@ -11,7 +11,7 @@ const PlaylistDisplay = (props) => {
     const { title } = snippet;
     const { itemCount } = contentDetails;
     return (
-      itemCount > 105 ? (
+      itemCount > 20 ? (
       <Playlist
         title={title}
         itemCount={itemCount}
