@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.nav-title {
+  font-family: 'Baloo Tammudu 2', cursive;
+}

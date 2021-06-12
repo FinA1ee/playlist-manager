@@ -4,7 +4,7 @@ const fetchPlaylists = () => {
     part: ["snippet,contentDetails"],
     maxResults: 25,
     mine: true,
-  });
+  })
 };
 
 const fetchPlaylistItems = (id, nextPageToken) => {
