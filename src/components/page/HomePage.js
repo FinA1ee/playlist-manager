@@ -54,7 +54,6 @@ const HomePage = (props) => {
             placeholder={"Select Your Playlist..."}
           />
           <PlaylistDisplay
-            isClientLoaded={isClientLoaded}
             playlistID={playlistID}
           />
         </div>

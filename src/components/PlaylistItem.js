@@ -8,7 +8,7 @@ const PlaylistItem = (props) => {
     const title = jsonData.snippet.title;
 
     return (
-        <section>
+        <section className="mb-3">
             <h5>{title}</h5>
             <img src={thumbnailURL} alt="thumbnail" />
         </section>

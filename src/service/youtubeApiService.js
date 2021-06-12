@@ -11,7 +11,7 @@ const fetchPlaylistItems = (id, nextPageToken) => {
   if (nextPageToken) {
     return gapi.client.youtube.playlistItems.list({
       part: ["snippet,contentDetails"],
-      maxResults: 50,
+      maxResults: 20,
       playlistId: id,
       pageToken: nextPageToken
     });
