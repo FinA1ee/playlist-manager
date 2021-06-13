@@ -3,6 +3,7 @@ import { fetchPlaylistItems } from "../service/youtubeApiService";
 import PlaylistItem from "./PlaylistItem";
 import PageControls from "./PageControls";
 import Loading from "./Loading";
+import { CSVLink, CSVDownload } from "react-csv";
 
 const PlaylistDisplay = (props) => {
   const [playlistItems, setPlaylistItems] = useState([]);
@@ -67,8 +68,20 @@ const PlaylistDisplay = (props) => {
     }
   };
 
+
+  const generateCSVData = () => {
+    const result = playlistItems.map((item) => {
+        return {title: item.snippet.title};
+    })
+    return result;
+  }
+
+
   return hasLoaded ? (
     <div>
+      <button type="button" className="btn btn-primary mt-5"> 
+        <CSVLink style={{textDecoration: "none", color: "white"}} data={generateCSVData()}>Export Playlist CSV</CSVLink>
+      </button>
       <div className="row row-cols-2 row-cols-lg-4 post-list mt-5">
         {playlistItemsDiv}
       </div>
