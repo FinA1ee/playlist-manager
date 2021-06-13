@@ -1,3 +1,4 @@
+/* global gapi */
 import React from "react";
 import { useState, useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -9,6 +10,7 @@ import "./App.css";
 // import Loading from "./components/Loading";
 import LoginPage from "./components/page/LoginPage";
 import HomePage from "./components/page/HomePage";
+import Loading from "./components/Loading";
 
 const App = () => {
   const [isGapiLoaded, setGapiLoaded] = useState(false);
@@ -17,6 +19,7 @@ const App = () => {
 
   useEffect(() => {
     document.body.appendChild(loadScript(setGapiLoaded));
+    // if(gapi) loadClient().then(function () { setClientLoaded(true) });
   }, [isGapiLoaded]);
 
   const onLoginSuccess = (response) => {
@@ -33,21 +36,13 @@ const App = () => {
         {isLogin ? <Redirect to="/home"/> : <LoginPage isGapiLoaded={isGapiLoaded} onLoginSuccess={onLoginSuccess}/>}
       </Route>
       <Route path="/home">
-        <HomePage isClientLoaded={isClientLoaded}/>
+        {isClientLoaded ? <HomePage /> : <Loading />}
       </Route>
+      <Route path="/home/:playlistName" render={(props) => (
+        isClientLoaded ? <HomePage {...props} /> : <Loading />
+      )} />
     </Switch>
   )
-
-
-
-  // return gapiLoaded ? (
-  //   <div>
-  //     <LoginPage />
-  //     {/* <PlaylistDisplay playlists={playlists}/> */}
-  //   </div>
-  // ) : (
-  //   <Loading/>
-  // );
 };
 
 export default App;

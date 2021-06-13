@@ -6,23 +6,19 @@ import { fetchPlaylists } from "../../service/youtubeApiService";
 import PlaylistDisplay from "../PlaylistDisplay";
 
 const HomePage = (props) => {
-  const { isClientLoaded } = props;
   const [playlists, setPlaylists] = useState([]);
-  const [playlistID, setPlaylistID] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
-    if (isClientLoaded) {
-      fetchPlaylists().then((res) => {
-        //   console.log(res.result.items)
-        setPlaylists(res.result.items);
-      });
-    }
+    fetchPlaylists().then((res) => {
+      //   console.log(res.result.items)
+      setPlaylists(res.result.items);
+    });
+
     // console.log("Result: ", fetchPlaylists().then());
-  }, [isClientLoaded]);
+  }, []);
 
   const onPlaylistSelectChange = (selectedItem) => {
-    setPlaylistID(selectedItem.value);
     setSelectedOption(selectedItem);
   };
 
@@ -45,21 +41,13 @@ const HomePage = (props) => {
         </a>
       </nav>
 
-      {isClientLoaded ? (
-        <div>
-          <Select
-            value={selectedOption}
-            onChange={onPlaylistSelectChange}
-            options={playlistOptions}
-            placeholder={"Select Your Playlist..."}
-          />
-          <PlaylistDisplay
-            playlistID={playlistID}
-          />
-        </div>
-      ) : (
-        <Loading />
-      )}
+      <Select
+        value={selectedOption}
+        onChange={onPlaylistSelectChange}
+        options={playlistOptions}
+        placeholder={"Select Your Playlist..."}
+      />
+      {selectedOption ? <PlaylistDisplay playlist={selectedOption} /> : null }
     </div>
   );
 };

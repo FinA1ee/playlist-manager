@@ -5,22 +5,23 @@ import React, { useEffect, useState } from 'react';
 // 2. # of page to display
 const PageControls = (props) => {
 
-    const { pageCount, currentPage, onNextPage } = props;
+    const { pageCount, currentPage, onNextPage, onPrevPage } = props;
     const [pageButtons, setPageButtons] = useState([]);
 
     useEffect(() => {
         console.log("Page Control Reloaded");
-        generateButtons(currentPage);
-    }, [currentPage]);
+        generateButtons(pageCount, currentPage);
+    }, [pageCount, currentPage]);
 
-    const generateButtons = (currentPage) => {
+    const generateButtons = (pageCount, currentPage) => {
         console.log("Current Page: ", currentPage);
+        console.log("Page Count: ", pageCount);
         let buttonArr = [];
         for( let i = 0; i < pageCount; i++){
             if ( i + 1 === currentPage ) {
-                buttonArr.push(<button className="me-2" style={{backgroundColor: "red"}}>{i+1}</button>)
+                buttonArr.push(<button key={i} className="me-2 mx-2" style={{backgroundColor: "red"}}>{i+1}</button>)
             } else {
-                buttonArr.push(<button className="me-2">{i+1}</button>)
+                buttonArr.push(<button key={i} className="me-2 mx-2">{i+1}</button>)
             }
         }
         setPageButtons(buttonArr);
@@ -29,8 +30,9 @@ const PageControls = (props) => {
 
     return (
         <div className="m-5">
+            <button onClick={onPrevPage}> {"上一页"} </button>
             {pageButtons}
-            <button onClick={onNextPage}> {pageCount !== currentPage ? "Next Page" : "Back to First" }</button>
+            <button onClick={onNextPage}> {"下一页"}</button>
         </div>
     )
 }

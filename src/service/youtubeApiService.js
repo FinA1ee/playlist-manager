@@ -7,18 +7,18 @@ const fetchPlaylists = () => {
   })
 };
 
-const fetchPlaylistItems = (id, nextPageToken) => {
+const fetchPlaylistItems = (id, nextPageToken, maxResults) => {
   if (nextPageToken) {
     return gapi.client.youtube.playlistItems.list({
       part: ["snippet,contentDetails"],
-      maxResults: 20,
+      maxResults: maxResults,
       playlistId: id,
       pageToken: nextPageToken
     });
   } else {
     return gapi.client.youtube.playlistItems.list({
       part: ["snippet,contentDetails"],
-      maxResults: 50,
+      maxResults: maxResults,
       playlistId: id,
     });
   }
