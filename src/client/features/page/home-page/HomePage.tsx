@@ -3,7 +3,7 @@
  * @author: your name
  * @Date: 2021-10-21 17:14:56
  * @LastEditors: your name
- * @LastEditTime: 2022-01-09 20:34:12
+ * @LastEditTime: 2022-01-09 20:47:45
  */
 import React, { useEffect, useState } from "react";
 import { Select } from "antd";
@@ -14,6 +14,9 @@ import PlaylistDisplay from "../../PlaylistDisplay";
 
 import { LottieAnimation } from "client/features/components";
 import { YoutubeAnimationJsonString } from "client/static/animation/LottieConsts";
+import LoginButton from "./login-btn";
+
+
 
 interface IHomePageProps {}
 
@@ -44,7 +47,7 @@ const HomePage = (props: IHomePageProps) => {
     <div className={'pm-home-page'}>
       <LottieAnimation srcJson={YoutubeAnimationJsonString} height={400} width={400}/>
       <span className={"pm-home-page-title"}>Welcome to Playlist Manager !</span>
-      
+      <LoginButton />
       {/* <Select
         value={selectedOption || ''}
         // onChange={onPlaylistSelectChange}
