@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchPlaylistItems } from "../service/youtubeApiService";
+import { fetchPlaylistItems } from "../server/youtubeApiService";
 import PlaylistItem from "./PlaylistItem";
 import PageControls from "./PageControls";
 import Loading from "./Loading";

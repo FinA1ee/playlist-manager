@@ -1,3 +1,12 @@
+/*
+ * @file: file description
+ * @author: your name
+ * @Date: 2021-10-21 17:14:56
+ * @LastEditors: your name
+ * @LastEditTime: 2022-01-09 14:15:46
+ */
+import { gapi } from "gapi-script";
+
 /* global gapi */
 const fetchPlaylists = () => {
   return gapi.client.youtube.playlists.list({
@@ -7,7 +16,7 @@ const fetchPlaylists = () => {
   })
 };
 
-const fetchPlaylistItems = (id, nextPageToken, maxResults) => {
+const fetchPlaylistItems = (id: any, nextPageToken: any, maxResults: number) => {
   if (nextPageToken) {
     return gapi.client.youtube.playlistItems.list({
       part: ["snippet,contentDetails"],
